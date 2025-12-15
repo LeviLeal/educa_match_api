@@ -3,7 +3,8 @@ import express, { Request, Response } from "express"
 import cors from 'cors'
 import AppDataSource from "./AppDataSource"
 
-import AutenticarRoutes from "./routes/authenticate"
+import AutenticateRoute from "./routes/authRoute"
+import SkillsRoute from "./routes/skillRoute"
 
 const app = express()
 
@@ -23,7 +24,8 @@ AppDataSource.initialize().then(() => {
             });
         })
 
-        app.use("/authenticate/", AutenticarRoutes)
+        app.use("/authenticate/", AutenticateRoute)
+        app.use("/skills/", SkillsRoute)
 
     })
 }).catch((error) => {

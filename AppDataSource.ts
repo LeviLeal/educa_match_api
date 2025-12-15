@@ -1,5 +1,6 @@
 import { DataSource } from "typeorm"
-import { User } from "./entities/user"
+import { User } from "./entities/UserEntity"
+import { Skill } from "./entities/SkillEntity"
 
 const AppDataSource = new DataSource({
     type: "mariadb",
@@ -10,7 +11,7 @@ const AppDataSource = new DataSource({
     database: "educa_match",
     synchronize: true,
     logging: true,
-    entities: [User],
+    entities: [User, Skill],
     subscribers: [],
     migrations: []
 })

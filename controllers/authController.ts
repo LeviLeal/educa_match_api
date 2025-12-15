@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 import AppDataSource from "../AppDataSource";
-import { User } from "../entities/user";
+import { User } from "../entities/UserEntity";
 import bcrypt from "bcrypt";
 
 const userRepository = AppDataSource.getRepository(User);
