@@ -19,11 +19,10 @@ export const getUserById = async (req: Request, res: Response) => {
         if (!user) {
             return res.status(404).json({
                 status: "ERROR",
-                msg: "Usuário não encontrado",
+                msg: "User not found",
             });
         }
 
-        // remover senha da resposta
         user.password = "";
 
         return res.json({
@@ -33,7 +32,7 @@ export const getUserById = async (req: Request, res: Response) => {
     } catch (error) {
         return res.status(500).json({
             status: "ERROR",
-            msg: "Erro ao buscar usuário",
+            msg: "Error searching for user",
         });
     }
 };
@@ -42,12 +41,13 @@ export const getUserById = async (req: Request, res: Response) => {
 export const addSkillsToUser = async (req: Request, res: Response) => {
     try {
         const userId = Number(req.params.userId);
-        const { skillIds } = req.body; // array de ids das skills
+        // expects an array { "skillsIds" : [1, 2, etc] }
+        const { skillIds } = req.body;
 
         if (!skillIds || !Array.isArray(skillIds)) {
             return res.status(400).json({
                 status: "ERROR",
-                msg: "skillIds deve ser um array de IDs",
+                msg: "skillIds has to be a skill id array",
             });
         }
 
@@ -59,7 +59,7 @@ export const addSkillsToUser = async (req: Request, res: Response) => {
         if (!user) {
             return res.status(404).json({
                 status: "ERROR",
-                msg: "Usuário não encontrado",
+                msg: "User not found",
             });
         }
 
@@ -68,11 +68,10 @@ export const addSkillsToUser = async (req: Request, res: Response) => {
         if (skills.length === 0) {
             return res.status(404).json({
                 status: "ERROR",
-                msg: "Nenhuma skill encontrada",
+                msg: "Couldn't find a skill",
             });
         }
 
-        // evita duplicar skills
         const existingSkillIds = user.skills.map(skill => skill.id);
         const newSkills = skills.filter(
             skill => !existingSkillIds.includes(skill.id)
@@ -89,7 +88,7 @@ export const addSkillsToUser = async (req: Request, res: Response) => {
     } catch (error) {
         return res.status(500).json({
             status: "ERROR",
-            msg: "Erro ao adicionar skills ao usuário",
+            msg: "Error adding skills to the user",
         });
     }
 };
@@ -97,12 +96,12 @@ export const addSkillsToUser = async (req: Request, res: Response) => {
 export const removeSkillsFromUser = async (req: Request, res: Response) => {
     try {
         const userId = Number(req.params.userId);
-        const { skillIds } = req.body; // array de ids das skills
+        const { skillIds } = req.body;
 
         if (!skillIds || !Array.isArray(skillIds)) {
             return res.status(400).json({
                 status: "ERROR",
-                msg: "skillIds deve ser um array de IDs",
+                msg: "skillIds has to be an id array",
             });
         }
 
@@ -149,7 +148,7 @@ export const listUserSkills = async (req: Request, res: Response) => {
         if (!user) {
             return res.status(404).json({
                 status: "ERROR",
-                msg: "Usuário não encontrado",
+                msg: "User not found",
             });
         }
 
@@ -160,7 +159,7 @@ export const listUserSkills = async (req: Request, res: Response) => {
     } catch (error) {
         return res.status(500).json({
             status: "ERROR",
-            msg: "Erro ao listar skills do usuário",
+            msg: "Error listing user skills",
         });
     }
 };
@@ -176,11 +175,10 @@ export const listUsersBySkill = async (req: Request, res: Response) => {
         if (!skill) {
             return res.status(404).json({
                 status: "ERROR",
-                msg: "Skill não encontrada",
+                msg: "Skill not found",
             });
         }
 
-        // opcional: remover senha
         skill.users = skill.users.map(user => {
             user.password = "";
             return user;
@@ -193,7 +191,7 @@ export const listUsersBySkill = async (req: Request, res: Response) => {
     } catch (error) {
         return res.status(500).json({
             status: "ERROR",
-            msg: "Erro ao listar usuários pela skill",
+            msg: "Error listing user by skill",
         });
     }
 };

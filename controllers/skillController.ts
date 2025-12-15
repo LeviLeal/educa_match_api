@@ -15,7 +15,6 @@ export const createSkill = async (req: Request, res: Response) => {
       });
     }
 
-    // veryify if skill already exists
     const skillExists = await skillRepository.findOne({
       where: { name },
     });
