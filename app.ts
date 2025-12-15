@@ -5,6 +5,7 @@ import AppDataSource from "./AppDataSource"
 
 import AutenticateRoute from "./routes/authRoute"
 import SkillsRoute from "./routes/skillRoute"
+import userRoute from "./routes/userRoute"
 
 const app = express()
 
@@ -26,6 +27,7 @@ AppDataSource.initialize().then(() => {
 
         app.use("/authenticate/", AutenticateRoute)
         app.use("/skills/", SkillsRoute)
+        app.use("/user/", userRoute)
 
     })
 }).catch((error) => {
